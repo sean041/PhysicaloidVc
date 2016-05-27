@@ -236,7 +236,7 @@ public class Stk500V2 extends UploadProtocol {
          * stk500v2_jtagmkII_send(pgm, data, len);
          */
         buf[0] = MESSAGE_START;
-        buf[1] = (byte) mCommandSeqNum;
+        buf[1] = (byte) (mCommandSeqNum % 128);
         buf[2] = (byte) (len / 256);
         buf[3] = (byte) (len % 256);
         buf[4] = TOKEN;
@@ -471,7 +471,7 @@ public class Stk500V2 extends UploadProtocol {
                         Log.d(TAG, "hoping for sequence...\n");
                     }
 
-                    if (c[0] == mCommandSeqNum) {
+                    if (c[0] == mCommandSeqNum % 128) {
                         if (DEBUG_SHOW_RECV) {
                             Log.d(TAG, "got it, incrementing\n");
                         }
